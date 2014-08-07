@@ -1,0 +1,18 @@
+<html ng-app>
+<body>
+    <div ng-controller='HelloController'>
+        <input ng-model='greeting.text'>
+        <p>{{greeting.text}}, World
+        </p>
+    </div>
+
+    <script>
+    function HelloController($scope) {
+        $scope.greeting = {
+            text: 'Hello'
+        };
+    }
+    </script>
+    <script src="../lib/angular.min.js"></script>
+</body>
+</html>

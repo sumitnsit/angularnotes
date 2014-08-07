@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Share UI</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="196x196" href="images/icon.png">
+    <link rel="apple-touch-icon" href="images/icon.png">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <link rel="stylesheet" href="lib/neo.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300,600' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="lib/codemirror.js"></script>
+    <script src="mode/javascript/javascript.js"></script>
+    <script src="mode/css/css.js"></script>
+    <script src="mode/xml/xml.js"></script>
+    <script src="mode/htmlmixed/htmlmixed.js"></script>
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="m0ut1fiorueyzy8"></script>
+    <script src="https://www.dropbox.com/static/api/dropbox-datastores-1.1-latest.js" type="text/javascript"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="lib/jscolor.js"></script>
+    <script src="util/formatting.js"></script>
+    <script src="lib/angular.min.js"> </script>
+</head>
+
+<body>
+
+    <h2>General Facts</h2>
+    <p><strong>ng-app</strong> is a directive which tells angular that the content inside this tag will be controlled by AngularJS </p>
+    <p><strong>ng-controller</strong> points to a JavaScript funtion which provides the content as properties of the $scope object</p>
+    <p><strong>greeting.text</strong> is a property of the $scope object</p>
+
+    <h5>index.html</h5>
+    <textarea id="html_editor" class="html_editor">
+<html ng-app >
+  <head>
+    <script src="angular.js">
+    </script> 
+    <script src="controllers.js" >
+    </script> 
+  </head> 
+  <body> 
+    <div ng-controller='HelloController' >
+      <p> {{greeting.text}}, World 
+    </div> 
+  </body> 
+</html>
+    </textarea>
+    <h5>controllers.js</h5>
+    <textarea class="js_editor">function HelloController($scope) { $scope.greeting = { text: 'Hello' }; }</textarea>
+
+    <h5>Output</h5>
+    <iframe  seamless src="examples/example1.html" width="100%"></iframe>
+
+    <p>In the above HTML code if an input element is added inside <strong>ng-controller</strong> tag, then we can bind any property of the scope to the input.</p>
+	<p>In this example <strong>greeting.tex</strong>t property has been binded to the input tag by using <strong>ng-model</strong>. This binding is two way binding. If we change the value of input text box then $scope's property will be updated. Similarly if we change the $scope property value then it will be reflected on the view/html. $scope's property could be updated on an ajax response from the server.
+	</p>
+    <h5>index.html</h5>
+    <textarea id="html_editor" class="html_editor">
+<html ng-app >
+  <head>
+    <script src="angular.js">
+    </script> 
+    <script src="controllers.js" >
+    </script> 
+  </head> 
+  <body> 
+    <div ng-controller='HelloController' >
+      <input ng-model='greeting.text' /> 
+      <p> {{greeting.text}}, World 
+    </div> 
+  </body> 
+</html>
+    </textarea>
+    <h5>Output</h5>
+    <iframe  seamless src="examples/example2.html" width="100%"></iframe>
+
+    <h2>Example: Shopping Cart</h2>
+    <p><strong>ng-repeat</strong> this is used to iterate an array or list. The content inside this tag is repeated.</p>
+    <p>It is similar to for(x in array). Besides defined var it also provides <strong>$index</strong> variable which is the index of current item in the given list or array.</p>
+    <p><strong>ng-click</strong> it is just like onclick, it executes a method which is a property of the $scope object. In this example <strong>remove()</strong> method is property of the $scope.</p>
+    <p>{{item.price <strong>| currency</strong>}} this is a filter which is applied on the evaluated value. <strong>currency</strong> filter prefixes amount with $ sign and formats input with 2 decimal places. </p>
+    <h5>index.html</h5>
+    <textarea id="html_editor" class="html_editor">
+    <html ng-app> <head><title> Your Shopping Cart </title> </head> <body ng-controller='CartController' > <h1> Your Order </h1> <div ng-repeat='item in items' > <span> {{item.title}} </span> <input ng-model='item.quantity' > <span> {{item.price | currency}} </span> <span> {{item.price * item.quantity | currency}} </span> <button ng-click="remove($index)" > Remove </button> </div> <script src="angular.js" ></script><script src="angular-route.min.js"></script><script src="controllers.js"></script></body> </html>
+    </textarea>    
+
+    <h5>controllers.js</h5>
+    <textarea class="js_editor">        function CartController($scope) {
+            $scope.items = [{
+                title: 'Paint pots',
+                quantity: 8,
+                price: 3.95
+            }, {
+                title: 'Polka dots',
+                quantity: 17,
+                price: 12.95
+            }, {
+                title: 'Pebbles',
+                quantity: 5,
+                price: 6.95
+            }];
+            $scope.remove = function(index) {
+                $scope.items.splice(index, 1);
+            }
+        }</textarea>
+
+        <h5>Output</h5>
+    <iframe  seamless src="examples/shoppingcart.html" width="100%"></iframe>
+
+    <h2>Module</h2>
+
+    <p>In the previous examples, we've created Controllers or methods in the global scope. Whose names might conflict with other existing function or other libraries. So, it is better to bind your controllers to a namespace.</p>
+
+    <p><strong>angular.module('myApp', [])</strong> this creates a module for your view with name as "myApp", <strong>[]</strong> contains a list of dependencies.</p>
+
+    <h5>index.html</h5>
+    <textarea id="html_editor" class="html_editor">
+
+<body ng-controller='TextController'>
+    <p>{{messages.welcomeText}}</p>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
+    </script>
+    <script>
+    var myAppModule = angular.module('myApp', []);
+    myAppModule.controller('TextController', function($scope) {
+        var messages = {};
+        messages.welcomeText = 'You have started your journey.';
+        $scope.messages = messages;
+    });
+    </script>
+</body>
+
+</html>
+</textarea>
+
+        <h5>Output</h5>
+    <iframe  seamless src="examples/module.html" width="100%"></iframe>
+
+<h2>ng-bind</h2>
+<p>You may also use <strong>ng-bind</strong> tag in place of {{ }} expression.</p>
+
+<h5>Example</h5>
+<textarea id="html_editor" class="html_editor"><span ng-bind="greeting"></span></textarea>
+
+<h2>ng-change</h2>
+<p><strong>computeNeeded</strong> method will be called whenever the value of the inputbox changes. computeNeeded method should be the property of the <strong>$scope</strong> object.</p>
+<h5>Code</h5>
+<textarea id="html_editor" class="html_editor">
+<form ng-controller="StartUpController"> Starting: <input ng-change="computeNeeded()"
+ng-model="funding.startingEstimate"> Recommendation: {{funding.needed}}
+</form>
+</textarea>
+</body>
+
+</html>

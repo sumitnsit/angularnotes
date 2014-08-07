@@ -1,0 +1,39 @@
+html{
+	background-color: #FAFAFA;
+}
+
+
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
+body{
+	font-family: 'Open Sans', sans-serif;
+	width: 80%;
+	margin: 40px auto;
+	background-color: white;
+	border: 1px solid #EEE;
+	padding: 30px;
+}
+
+.CodeMirror{
+	height: auto !important;
+}
+
+iframe{
+	border: none;
+}
+
+strong{
+	color: #1d75b3;
+}
+
+p{
+	padding: 10px 0px;
+}
+
+h5{
+	padding-top: 30px;
+	padding-bottom: 20px;
+}	
